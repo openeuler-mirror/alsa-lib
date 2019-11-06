@@ -1,6 +1,6 @@
 Name:	 alsa-lib
 Version: 1.1.6
-Release: 4
+Release: 5
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
@@ -14,7 +14,7 @@ Patch0:   alsa-lib-1.0.24-config.patch
 Patch1:   alsa-lib-1.0.14-glibc-open.patch
 Patch2:   alsa-lib-addon-dir.patch
 
-BuildRequires: autoconf, automake, libtool, doxygen, alsa-utils
+BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
 
 %description
@@ -82,5 +82,11 @@ install -p -m 0644 %{SOURCE12} %{buildroot}%{_defaultdocdir}/%{name}/
 
 
 %changelog
+* Thu Oct 24 2019 caomeng <caomeng5@huawei.com> - 1.1.6-5
+- Type:NA
+- ID:NA
+- SUG:NA
+- DESC:delete build requirement alsa-utils
+
 * Mon Aug 19 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.1.6-4
 - Package init
