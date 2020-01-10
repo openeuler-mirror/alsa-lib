@@ -1,6 +1,6 @@
 Name:	 alsa-lib
 Version: 1.1.6
-Release: 5
+Release: 6
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
@@ -8,7 +8,8 @@ URL:     https://alsa-project.org/
 Source0: https://www.alsa-project.org/files/pub/lib/%{name}-%{version}.tar.bz2
 Source10: asound.conf
 
-Patch0:   alsa-lib-addon-dir.patch
+Patch0:   alsa.conf-change-the-location-for-add-on-configs-to-.patch
+Patch1:   conf-remove-alsa.conf.d-from-the-datadir.patch
 
 BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
