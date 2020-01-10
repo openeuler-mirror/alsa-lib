@@ -1,43 +1,7 @@
-From 93e03bdc2a3dcd5d12516f5de78e14d88a32ff2c Mon Sep 17 00:00:00 2001
-From: Jaroslav Kysela <perex@perex.cz>
-Date: Wed, 4 Apr 2018 09:58:12 +0200
-Subject: [PATCH 1/2] alsa.conf: change the location for add-on configs to
- /etc/alsa/conf.d
-
-The add-on configuration files should be placed to a volatile place.
-
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
----
- src/conf/alsa.conf | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
-
-diff --git a/src/conf/alsa.conf b/src/conf/alsa.conf
-index f22918fb..bb00ff40 100644
---- a/src/conf/alsa.conf
-+++ b/src/conf/alsa.conf
-@@ -8,13 +8,7 @@
- 	{
- 		func load
- 		files [
--			{
--				@func concat
--				strings [
--					{ @func datadir }
--					"/alsa.conf.d/"
--				]
--			}
-+			"/etc/alsa/conf.d"
- 			"/etc/asound.conf"
- 			"~/.asoundrc"
- 		]
--- 
-2.13.6
-
-
 From 78505dccd23546cc77e5221cb21c01325bc0138d Mon Sep 17 00:00:00 2001
 From: Jaroslav Kysela <perex@perex.cz>
 Date: Wed, 4 Apr 2018 10:02:49 +0200
-Subject: [PATCH 2/2] conf: remove alsa.conf.d from the datadir
+Subject: [PATCH] conf: remove alsa.conf.d from the datadir
 
 Signed-off-by: Jaroslav Kysela <perex@perex.cz>
 ---
@@ -49,7 +13,7 @@ Signed-off-by: Jaroslav Kysela <perex@perex.cz>
  delete mode 100644 src/conf/alsa.conf.d/README
 
 diff --git a/src/conf/Makefile.am b/src/conf/Makefile.am
-index ef2ea9c1..2b46f95c 100644
+index ef2ea9c..2b46f95 100644
 --- a/src/conf/Makefile.am
 +++ b/src/conf/Makefile.am
 @@ -1,4 +1,4 @@
@@ -60,7 +24,7 @@ index ef2ea9c1..2b46f95c 100644
  SUBDIRS += ucm
 diff --git a/src/conf/alsa.conf.d/Makefile.am b/src/conf/alsa.conf.d/Makefile.am
 deleted file mode 100644
-index c91661e9..00000000
+index c91661e..0000000
 --- a/src/conf/alsa.conf.d/Makefile.am
 +++ /dev/null
 @@ -1,8 +0,0 @@
@@ -74,12 +38,12 @@ index c91661e9..00000000
 -	$(cfg_files)
 diff --git a/src/conf/alsa.conf.d/README b/src/conf/alsa.conf.d/README
 deleted file mode 100644
-index 99978848..00000000
+index 9997884..0000000
 --- a/src/conf/alsa.conf.d/README
 +++ /dev/null
 @@ -1,2 +0,0 @@
 -You can place files named *.conf in this folder and they will be processed
 -when initialising alsa-lib.
 -- 
-2.13.6
+1.8.3.1
 

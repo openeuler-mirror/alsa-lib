@@ -1,18 +1,15 @@
 Name:	 alsa-lib
 Version: 1.1.6
-Release: 5
+Release: 6
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
 URL:     https://alsa-project.org/
 Source0: https://www.alsa-project.org/files/pub/lib/%{name}-%{version}.tar.bz2
 Source10: asound.conf
-Source11: modprobe-dist-alsa.conf
-Source12: modprobe-dist-oss.conf
 
-Patch0:   alsa-lib-1.0.24-config.patch
-Patch1:   alsa-lib-1.0.14-glibc-open.patch
-Patch2:   alsa-lib-addon-dir.patch
+Patch0:   alsa.conf-change-the-location-for-add-on-configs-to-.patch
+Patch1:   conf-remove-alsa.conf.d-from-the-datadir.patch
 
 BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
@@ -53,21 +50,12 @@ make install DESTDIR=%{buildroot}
 mkdir -p -m 755 %{buildroot}%{_sysconfdir} 
 install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 
-# install alsa modprobe configure file ,backup  oss modprobe configure file
-mkdir -p -m 755 %{buildroot}%{_prefix}/lib/modprobe.d/
-install -p -m 0644 %{SOURCE11} %{buildroot}%{_prefix}/lib/modprobe.d/dist-alsa.conf
-
-mkdir -p -m 755 %{buildroot}/%{_defaultdocdir}/%{name}
-install -p -m 0644 %{SOURCE12} %{buildroot}%{_defaultdocdir}/%{name}/
-
 %ldconfig_scriptlets
 
 %files
 %license COPYING
 %doc doc/asoundrc.txt 
 %{_sysconfdir}/*.conf
-%{_prefix}/lib/modprobe.d/*.conf
-%{_defaultdocdir}/%{name}/*.conf
 %{_bindir}/*
 %{_libdir}/libasound.so.*
 %{_datadir}/alsa/*
@@ -82,6 +70,9 @@ install -p -m 0644 %{SOURCE12} %{buildroot}%{_defaultdocdir}/%{name}/
 
 
 %changelog
+* Fri Jan 10 2020 SuperHugePan <zhangpan26@huawei.com> - 1.1.6-6
+- remove useless code
+
 * Thu Oct 24 2019 caomeng <caomeng5@huawei.com> - 1.1.6-5
 - Type:NA
 - ID:NA
