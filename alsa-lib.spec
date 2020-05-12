@@ -1,15 +1,12 @@
 Name:	 alsa-lib
-Version: 1.1.6
-Release: 6
+Version: 1.2.2
+Release: 1
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
 URL:     https://alsa-project.org/
 Source0: https://www.alsa-project.org/files/pub/lib/%{name}-%{version}.tar.bz2
 Source10: asound.conf
-
-Patch0:   alsa.conf-change-the-location-for-add-on-configs-to-.patch
-Patch1:   conf-remove-alsa.conf.d-from-the-datadir.patch
 
 BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
@@ -58,18 +55,24 @@ install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 %{_sysconfdir}/*.conf
 %{_bindir}/*
 %{_libdir}/libasound.so.*
+%{_libdir}/libatopology.so.*
 %{_datadir}/alsa/*
 
 %files devel
 %doc doc/doxygen/ TODO
 %{_libdir}/libasound.so
+%{_libdir}/libatopology.so
 %exclude %{_libdir}/libasound.la
+%exclude %{_libdir}/libatopology.la
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/*
 %{_datadir}/aclocal/*.m4
 
 
 %changelog
+* Fri Apr 24 2020 SuperHugePan <zhangpan26@huawei.com> - 1.2.2-1
+- update to 1.2.2
+
 * Fri Jan 10 2020 SuperHugePan <zhangpan26@huawei.com> - 1.1.6-6
 - remove useless code
 
