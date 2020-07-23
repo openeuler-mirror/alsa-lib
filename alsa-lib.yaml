@@ -1,5 +1,0 @@
-version_control: github
-src_repo: alsa-projetc/alsa-lib
-tag_prefix: ^v
-seperator: "."
-
