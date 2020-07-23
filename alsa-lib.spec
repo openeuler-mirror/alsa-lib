@@ -1,5 +1,5 @@
 Name:	 alsa-lib
-Version: 1.2.2
+Version: 1.2.3
 Release: 1
 Summary: the user space library that developers compile ALSA applications against
 
@@ -70,6 +70,9 @@ install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 
 
 %changelog
+* Wed Jul 22 2020 jinzhimin <jinzhimin2@huawei.com> - 1.2.3-1
+- update to 1.2.3
+
 * Fri Apr 24 2020 SuperHugePan <zhangpan26@huawei.com> - 1.2.2-1
 - update to 1.2.2
 
