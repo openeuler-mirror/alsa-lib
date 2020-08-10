@@ -1,13 +1,18 @@
+%define version_alsa_ucm  1.2.3
+%define version_alsa_tplg 1.2.3
 Name:	 alsa-lib
 Version: 1.2.3
-Release: 1
+Release: 2
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
 URL:     https://alsa-project.org/
 Source0: https://www.alsa-project.org/files/pub/lib/%{name}-%{version}.tar.bz2
+Source1:  ftp://ftp.alsa-project.org/pub/lib/alsa-ucm-conf-%{version_alsa_ucm}.tar.bz2
+Source2:  ftp://ftp.alsa-project.org/pub/lib/alsa-topology-conf-%{version_alsa_tplg}.tar.bz2
 Source10: asound.conf
 
+Source40: alsa-ucm-conf.patch
 BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
 
@@ -25,6 +30,26 @@ Provides: pkgconfig(alsa)
 
 %description devel
 This package contains libraries and header files for the ALSA development.
+
+%package  -n alsa-ucm
+Summary:   ALSA Use Case Manager configuration
+BuildArch: noarch
+License:   BSD
+Requires:  %{name} >= %{version_alsa_ucm}
+
+%description -n alsa-ucm
+The Advanced Linux Sound Architecture (ALSA) Use Case Manager configuration
+contains alsa-lib configuration of Audio input/output names and routing
+
+%package  -n alsa-topology
+Summary:   ALSA Topology configuration
+BuildArch: noarch
+License:   BSD
+Requires:  %{name} >= %{version_alsa_tplg}
+
+%description -n alsa-topology
+The Advanced Linux Sound Architecture (ALSA) topology configuration
+contains alsa-lib configuration of SoC topology
 
 %prep
 %autosetup -n %{name}-%{version} -p1
@@ -47,6 +72,22 @@ make install DESTDIR=%{buildroot}
 mkdir -p -m 755 %{buildroot}%{_sysconfdir} 
 install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 
+# Create UCM directories
+mkdir -p %{buildroot}/%{_datadir}/alsa/ucm
+mkdir -p %{buildroot}/%{_datadir}/alsa/ucm2
+
+# Unpack UCMs
+tar xvjf %{SOURCE1} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/ucm" "*/ucm2"
+patch -d %{buildroot}/%{_datadir}/alsa -p1 < %{SOURCE40}
+
+# Create topology directory
+mkdir -p %{buildroot}/%{_datadir}/alsa/topology
+
+# Unpack topologies
+tar xvjf %{SOURCE2} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/topology"
+
+
+
 %ldconfig_scriptlets
 
 %files
@@ -57,6 +98,9 @@ install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 %{_libdir}/libasound.so.*
 %{_libdir}/libatopology.so.*
 %{_datadir}/alsa/*
+%exclude %{_datadir}/alsa/ucm
+%exclude %{_datadir}/alsa/ucm2
+%exclude %{_datadir}/alsa/topology
 
 %files devel
 %doc doc/doxygen/ TODO
@@ -68,8 +112,19 @@ install -p -m 0644 %{SOURCE10} %{buildroot}%{_sysconfdir}
 %{_includedir}/*
 %{_datadir}/aclocal/*.m4
 
+%files -n alsa-ucm
+# BSD
+%{_datadir}/alsa/ucm
+%{_datadir}/alsa/ucm2
+
+%files -n alsa-topology
+# BSD
+%{_datadir}/alsa/topology
 
 %changelog
+* Mon Aug 10 2020 douyan <douyan@kylinos.cn> - 1.2.3-2
+- add alsa-ucm and alsa-topology package
+
 * Wed Jul 22 2020 jinzhimin <jinzhimin2@huawei.com> - 1.2.3-1
 - update to 1.2.3
 
