@@ -1,0 +1,33 @@
+name: alsa-lib
+old_version: 1.2.2
+new_version: 1.2.3
+interface_differences:
+- type: 'config file'
+  item: src/conf/alsa.conf
+  diff: 添加对XDG_CONFIG_HOME路径的搜索支持
+  influence: 功能增强
+- type: 'config file'
+  item: PCM
+  diff: 改变PCM设备编号为Asus Xonar U5
+  influence: 功能优化
+- type: 'config file'
+  item: src/conf/cards/USB-Audio.conf
+  diff: 为Asus Xonar 5添加另一个声卡名XONAR U5
+  influence: 功能增强
+- type: 'feature'
+  item: Define/DefineRegex
+  diff: 在Syntax 3支持Define/DefineRegex
+  influence: 功能增强
+- type: 'ABI'
+  item: ucm配置文件解析器
+  diff: src/ucm/parser.c添加ucm配置文件解析器
+  influence: 功能增强
+- type: 'ABI'
+  item: ucm新增parse_string_substitute，parse_integer_substitute
+  diff: 解析字符串并替换，解析整数并替换
+  influence: 功能增强，对外无影响
+- type: 'ABI'
+  item: ucm新增parse_controls_once
+  diff: 解析UCM配置文件中的SectionOnce部分
+  influence: 功能增强
+remark: '新增功能，对原有功能无影响;'
