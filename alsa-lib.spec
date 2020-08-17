@@ -1,18 +1,18 @@
+%define version_alsa_ucm  1.2.3
+%define version_alsa_tplg 1.2.3
 Name:	 alsa-lib
-Version: 1.2.2
-Release: 2
+Version: 1.2.3
+Release: 1
 Summary: the user space library that developers compile ALSA applications against
-
-%define alsa_ucm_version  1.2.2
-%define alsa_tplg_version 1.2.2
 
 License: LGPLv2+
 URL:     https://alsa-project.org/
 Source0: https://www.alsa-project.org/files/pub/lib/%{name}-%{version}.tar.bz2
-Source1: ftp://ftp.alsa-project.org/pub/lib/alsa-ucm-conf-%{alsa_ucm_version}.tar.bz2
-Source2: ftp://ftp.alsa-project.org/pub/lib/alsa-topology-conf-%{alsa_tplg_version}.tar.bz2
+Source1:  ftp://ftp.alsa-project.org/pub/lib/alsa-ucm-conf-%{version_alsa_ucm}.tar.bz2
+Source2:  ftp://ftp.alsa-project.org/pub/lib/alsa-topology-conf-%{version_alsa_tplg}.tar.bz2
 Source10: asound.conf
 
+Source40: alsa-ucm-conf.patch
 BuildRequires: autoconf, automake, libtool, doxygen
 Requires: coreutils
 
@@ -33,20 +33,20 @@ This package contains libraries and header files for the ALSA development.
 
 %package  -n alsa-ucm
 Summary:   ALSA Use Case Manager configuration
-Group:     System Environment/Libraries
 BuildArch: noarch
-Requires:  %{name} = %{version}-%{release}
- 
+License:   BSD
+Requires:  %{name} >= %{version_alsa_ucm}
+
 %description -n alsa-ucm
 The Advanced Linux Sound Architecture (ALSA) Use Case Manager configuration
 contains alsa-lib configuration of Audio input/output names and routing
  
 %package  -n alsa-topology
 Summary:   ALSA Topology configuration
-Group:     System Environment/Libraries
 BuildArch: noarch
-Requires:  %{name} = %{version}-%{release}
- 
+License:   BSD
+Requires:  %{name} >= %{version_alsa_tplg}
+
 %description -n alsa-topology
 The Advanced Linux Sound Architecture (ALSA) topology configuration
 contains alsa-lib configuration of SoC topology
@@ -78,7 +78,8 @@ mkdir -p %{buildroot}/%{_datadir}/alsa/ucm2
  
 # Unpack UCMs
 tar xvjf %{SOURCE1} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/ucm" "*/ucm2"
- 
+patch -d %{buildroot}/%{_datadir}/alsa -p1 < %{SOURCE40}
+
 # Create topology directory
 mkdir -p %{buildroot}/%{_datadir}/alsa/topology
  
@@ -110,14 +111,19 @@ tar xvjf %{SOURCE2} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/top
 %{_datadir}/aclocal/*.m4
 
 %files -n alsa-ucm
+# BSD
 %{_datadir}/alsa/ucm
 %{_datadir}/alsa/ucm2
  
 %files -n alsa-topology
+# BSD
 %{_datadir}/alsa/topology
 
 
 %changelog
+* Sat Aug 15 2020 xinghe <xinghe1@huawei.com> - 1.2.3-1
+- update to 1.2.3
+
 * Fri May 29 2020 gaoch_100 <gaochao52@huawei.com> - 1.2.2-2
 - DESC:add alsa-ucm alsa-topology
 
