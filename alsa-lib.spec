@@ -1,8 +1,8 @@
-%define version_alsa_ucm  1.2.3
-%define version_alsa_tplg 1.2.3
+%define version_alsa_ucm  1.2.4
+%define version_alsa_tplg 1.2.4
 Name:	 alsa-lib
-Version: 1.2.3
-Release: 2
+Version: 1.2.4
+Release: 1
 Summary: the user space library that developers compile ALSA applications against
 
 License: LGPLv2+
@@ -122,6 +122,9 @@ tar xvjf %{SOURCE2} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/top
 %{_datadir}/alsa/topology
 
 %changelog
+* Sat Jan 30 2021 xinghe <xinghe1@huawei.com> - 1.2.4-1
+- update to 1.2.4
+
 * Mon Aug 10 2020 douyan <douyan@kylinos.cn> - 1.2.3-2
 - add alsa-ucm and alsa-topology package
 
