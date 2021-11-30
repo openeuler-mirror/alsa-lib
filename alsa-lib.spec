@@ -1,7 +1,7 @@
-%define version_alsa_ucm  1.2.4
-%define version_alsa_tplg 1.2.4
+%define version_alsa_ucm  1.2.5.1
+%define version_alsa_tplg 1.2.5.1
 Name:	 alsa-lib
-Version: 1.2.4
+Version: 1.2.5.1
 Release: 1
 Summary: the user space library that developers compile ALSA applications against
 
@@ -122,6 +122,9 @@ tar xvjf %{SOURCE2} -C %{buildroot}/%{_datadir}/alsa --strip-components=1 "*/top
 %{_datadir}/alsa/topology
 
 %changelog
+* Mon Nov 29 2021 zhouwenpei <zhouwenpei1@huawei.com> - 1.2.5.1-1
+- update to 1.2.5.1
+
 * Sat Jan 30 2021 xinghe <xinghe1@huawei.com> - 1.2.4-1
 - update to 1.2.4
 
